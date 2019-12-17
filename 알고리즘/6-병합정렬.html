@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 병합정렬 : 재귀용법을 활욛한 정렬 알고리즘
+        // 리스트를 절반으로 잘라 비슷한 크기의 리스트로 나눈다. (데이터는 더이상 분리할수 없을 정도로 계속해서 나눈다.)
+        // 각 리스트를 재귀적으로 합병 정렬을 이용해 정렬한다.
+        // 다시 하나의 정렬된 리스트로 합병한다.
+        // 분할 정복 알고리즘의 사례중 하나
+
+        // [1, 9, 3, 2] -> [1, 9] , [3, 2]
+        // [1], [9]  -> [1, 9]  || [3], [2] -> [2, 3]  -> [1, 9] + [2, 3] 
+        // 1 < 2  = [1]  =>  9 > 2 [1, 2] => 9 > 3 [1, 2, 3] => [1, 2, 3, 4]
+
+        // [49, 97, 53, 5, 33, 65, 61 ,51]
+
+        // ---- split ----
+        // [49, 97, 53, 5] , [33, 65, 62, 51]
+        // [49, 97], [53, 5], [33, 65], [62, 61]
+        // [49], [97], [53], [5], [33], [65], [62], [61] 데이터가 더 분리될수 없는 크리고 쪼개졌다면 그재서야 합친다.
+
+        // ---- merge ----
+        // [49, 97], [5, 53], [33, 65], [51, 62] 데이터를 합칠 때 작은 데이터가 앞에오고 큰 데이터가 뒤로 간다.
+        // [49, 97], [5, 53]을 합칠 때 각 리스트의 0번 인덱스 값을 비교해서
+        // 더 작은 값(5)을 새로운 리스트에 추가하고 다음에 비교할 때는
+        // [49, 97] 의 0번 인덱스와 [5, 53]에서 5는 새로운 리스트에 추가 됬으므로 1번 인덱스와 비교한다.
+        // 53이 추가가 되면 더 비교할 값이 없는 97은 그래도 새 리스트로 들어간다.
+        // [5, 49, 53, 97] 
+
+        // console.log(splitData([3, 4, 1, 3, 2]));
+
+        function splitData(data) {
+            var medium = Math.floor(data.length / 2);
+            var left = data.slice(0, medium);
+            var right = data.slice(medium);
+            console.log(medium, left, right)
+        }
+
+        console.log(mergeSplit([3, 4, 1, 3, 2]));
+
+        function mergeSplit(data) {
+            if (data.length <= 1) {
+                return data
+            }
+            var medium = Math.floor(data.length / 2);
+            // var left = mergeSplit(data.slice(0, medium));
+            // var right = mergeSplit(data.slice(medium));
+            var left = data.slice(0, medium);
+            var right = data.slice(medium);
+            return merge(mergeSplit(left), mergeSplit(right))
+            //return merge(left, right);
+        }
+
+        function merge(left, right) {
+            var merged = [];
+            var left_point = 0;
+            var right_point = 0;
+            console.log(left, right)
+            // left와 right가 아직 남아 있을 때
+            while (left.length > left_point && right.length > right_point) {
+                if (left[left_point] > right[right_point]) {
+                    merged.push(right[right_point]);
+                    right_point += 1;
+                } else {
+                    merged.push(left[left_point]);
+                    left_point += 1;
+                }
+            }
+            // left만 남아있을 때
+            while (left.length > left_point) {
+                merged.push(left[left_point]);
+                left_point += 1;
+            }
+
+            // right만 남아있을 때
+            while (right.length > right_point) {
+                merged.push(right[right_point]);
+                right_point += 1;
+            }
+
+            return merged
+        }
+    </script>
+</body>
+
+</html>

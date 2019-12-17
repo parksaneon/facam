@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function createQueue() {
+            // 큐는 fifo 또는 lilo의 형태를 띈다.
+            const queue = [];
+            return {
+                enqueue(item) { // 아이템 추가
+                    queue.push(item);
+                },
+                dequeue() {
+                    return queue.shift();
+                    // shift 메소드는 배열에서 첫 번째 원소를 제거
+                },
+                peek() {
+                    return queue[queue.length - 1];
+                },
+                get length() {
+                    return queue.length;
+                },
+                isEmpty() {
+                    return queue.length === 0;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

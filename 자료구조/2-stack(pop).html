@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function createStack() {
+            //  stack은 lifo 형태를 띈다.
+            const stack = [];
+            return {
+                enstack(item) { // 아이템 추가
+                    stack.push(item);
+                },
+                destack() {
+                    return stack.pop();
+                    // pop 메소드는 배열의 마지막 원소를 반환하고 해당 원소를 배열에서 제거
+                },
+                peek() {
+                    return stack[stack.length - 1];
+                },
+                get length() {
+                    return stack.length;
+                },
+                isEmpty() {
+                    return stack.length === 0;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

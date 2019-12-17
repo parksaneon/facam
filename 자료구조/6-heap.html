@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 힙은 트리와 같은 이진 트리 구조를 가진다.
+
+        // 이진트리는 한 데이터에 하위 데이터가 최대 2개인 형태
+        // 힙은 처음 자식이 들어오면 무조건 왼쪽부터 오른쪽 순으로 채워나간다.
+        // 힙은 이진트리와 달리 최소값과 최대값을 찾는데 유용한 구조이다.(이진트리는 구조 탐색 용도)
+
+        // 배열로 힙을 나타내 때 ( 편의상 0이 아닌 1번째 인덱스 부터 시작한다. )
+        // 부모노드에 인덱스 번호 : 자식 노드 인덱스 번호 / 2
+        // 왼쪽 자식 노드 번호 : 부모 노드 인덱스 * 2
+        // 오른쪽 자식 노드 번호 : (부모 노드 인덱스 번호 * 2 )+ 1
+        function Node(value) {
+            this.value = value;
+            this.left = NONE;
+            this.right = NONE;
+        }
+
+        function Heap() { }
+
+
+        Heap.prototype.init = function (data) {
+            this.heap_array = []; // or New List();
+            this.heap_array.push(null);
+            this.heap_array.push(data);
+        }
+
+        Heap.prototype.move_up = function (inserted_index) {
+            if (inserted_index <= 1) { // 데이터가 루트 노드 일때
+                return false
+            }
+            var parent_index = inserted_index / 2;
+            if (this.heap_array[inserted_index] > this.heap_array[parent_index]) {
+                return true
+            } else {
+                return false
+            }
+        };
+
+        Heap.prototype.add = function (data) {
+            if (this.heap_array === 0) {
+                this.heap_array = [];
+                this.heap_array.push(null);
+                this.heap_array.push(data);
+                return true
+            }
+            this.heap_array.push(data);
+
+            this.inserted_index = this.heap_array.length - 1;
+
+            while (this.move_up(this.inserted_index)) {
+                this.parent_index = this.inserted_index / 2;
+                console.log(this.parent_index)
+                var insert_data = this.heap_array[this.inserted_index];
+                var parent_data = this.heap_array[this.parent_index];
+                this.heap_array[this.inserted_index] = parent_data;
+                this.heap_array[this.parent_index] = insert_data;
+                this.inserted_index = this.parent_index;
+            }
+
+            return true
+        }
+
+        var heap = new Heap();
+        heap.init(1);
+        heap.add(15);
+        heap.add(10);
+        heap.add(8);
+        // heap.add(5);
+        // heap.add(4);
+        heap.add(20);
+        console.log(heap);
+    </script>
+</body>
+
+</html>

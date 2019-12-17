@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 트리는 이진트리 구조로 검색 알고리즘 구현을 위해 많이 사용된다.
+        // 트리에서 최상단에 위치한 데이터를 루트 노드라고 한다.
+
+        // 이진트리는 한 데이터에 하위 데이터가 최대 2개인 형태
+        // 이진탐색트리는 이진트리에 추가적인 조건이 있는 트리
+        // -- 자식노드의 왼쪽은 해당 부모 보다 작은 값이며 반대로 오른쪽 노드는 부모보다 큰 값을 가진다.
+
+        function Node(value) {
+            this.value = value;
+            this.left = NONE;
+            this.right = NONE;
+        }
+
+        function TreeMgmt(head) {
+            this.prototype.init = function (head) {
+                this.head = head;
+            }
+
+            if (head) {
+                this.init(head);
+            }
+
+            this.prototype.add = function (self, value) {
+                this.current_node = this.head;
+                while (true) {
+                    if (value < this.current_node.value) { // 들어오는 값이 현재 노드 보다 작다면
+                        if (this.current_node.left !== NONE) { // 현재 노드의 왼쪽 값이 존재한다면
+                            this.current_node = this.current_node.left // this.current_node 값을 바꿔줘서 다시 while문을 순회한다.
+                        } else { // 왼쪽 값이 없을떄
+                            this.current_node.left = new Node(value); // 왼쪽 값에 새로운 노드 값을 넣어준다.
+                            break;
+                        }
+                    } else {
+                        if (this.current_node.right !== NONE) { // 현재 노드에 오른쪽 값이 존재한다면
+                            this.current_node = this.current_node.right;
+                        } else {
+                            this.current_node.right = new Node(value);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            this.prototype.search = function (value) {
+                this.current_node = self.head;
+                while (this.current_node) {
+                    if (this.current_node.value === value) {
+                        return true;
+                    } else if (value < this.current_node.value) {
+                        this.current_node = this.current_node.left;
+                    } else {
+                        this.current_node = this.current_node.right;
+                    }
+                }
+                return false;
+            }
+
+            this.prototype.remove = function (value) {
+                var searched = false;
+                this.current_node = this.head; // 삭제할 노드를 할당할 변수
+                this.parent = this.head;
+                while (this.current_node) { // 삭제할 값을 찾을 때까지 반복문을 실행한다.
+                    if (this.current_node.value === value) {
+                        searched = true;
+                        break;
+                    } else if (value < this.current_node) { // 현재 값이 삭제할 값보다 작다면 ( 왼쪽)
+                        this.parent = this.current_node; // parent 변수에 현재 값을 넣어주고 
+                        this.current_node = this.current_node.left; // 현재 값 변수에는 현재 값의 왼쪽 값을 넣어준다.
+                    } else {                                // 현재 값이 삭제할 값보다 크다면 ( 오른쪽)
+                        this.parent = this.current_node;
+                        this.current_node = this.current_node.right; // 현재 값 변수에는 현재 값의 오른쪽 값을 넣어준다.
+                    }
+                }
+
+                if (searched === false) {
+                    return false;
+                }
+
+                // 현재 this.current_node 에는 반복문을 통해 삭제할 value가 할당되어 있는 상태
+
+                // 삭제할 노드의 자식이 하나도 없는 경우
+                if (this.current_node.left === NONE && this.current_node.right === NONE) {
+                    if (value < this.parent.value) { // 삭제할 값이 해당 부모보다 작을 때
+                        this.parent.left = NONE; // 삭제할 데이터를 가진 부모의 왼쪽 값을 삭제
+                    } else {                         // 삭제할 값이 해당 부모보다 클 때
+                        this.parent.right = NONE; // 삭제할 데이터를 가진 부모의 오른쪽 값을 삭제
+                    }
+                    delete this.current_node // 삭제할 데이터 자체를 삭제
+                }
+
+                // 삭제할 노드의 왼쪽 자식만 있고 오른쪽 자식은 존재하지 않을 경우
+                if (this.current_node.left != NONE && this.current_node.right === NONE) {
+                    if (value < this.parent.value) {  // 삭제할 데이터가 해당 부모의 값보다 작을때(왼쪽)
+                        this.parent.left = this.current_node.left; // 삭제할 데이터의 부모의 왼쪽 값에 삭제할 값의 왼쪽 값을 할당
+                    } else {
+                        this.parent.right = this.current_node.left; // 삭제할 데이터의 부모의 오른쪽 값에 삭제할 값의 오른쪽 값을 할당
+                    }
+                } else if (this.current_node.left === NONE && this.current_node.right != NONE) {
+                    // 삭제할 노드의 오론쪽 자식만 있고 왼쪽 자식은 존재하지 않을 경우
+                    if (value < this.parent.value) {
+                        this.parent.left = this.current_node.right;
+                    } else {
+                        this.parent.right = this.current_node.right;
+                    }
+                }
+
+                // 삭제할 노드가 2개의 자식을 가지고 있을 경우
+                if (this.current_node.left != NONE && this.current_node.right != NOME) {
+                    if (value < this.parent.value) { // 삭제할 데이터가 부모보다 작은 경우
+                        this.change_node = this.current_node.right;
+                        this.change_node_parent = this.current_node;
+                        while (this.change_node.left != NONE) {
+                            this.change_node_parent = this.change_node_parent;
+                            this.change_node = this.change_node.left;
+                        }
+                        this.change_node_parent.left = NONE;
+                        if (this.change_node.right != NONE) {
+                            this.change_node_parent.left = this.change_node.right;
+                        } else {
+                            this.change_node.left != NONE;
+                        }
+                        this.parent.left = this.change_node;
+                        this.change_node.right = this.change_node.right;
+                        this.change_node.left = this.change_node.left
+                    } else {
+                        this.change_node = this.current_node.right;
+                        this.change_node_parent = this.current_node.left;
+                        while (this.change_node.left != NONE{
+                            this.change_node_parent = this.current_node;
+                            this.change_node = this.change_node.left
+                        }
+                        if (this.change_node.right != NONE) {
+                            this.change_node_parent.left = this.change_node.right
+                        } else {
+                            this.change_node_parent.left = NONE
+                        }
+                        this.parent.right = this.change_node;
+                        this.change_node.left = this.current_node.left;
+                        this.change_node.right = this.current_node.right;
+
+                    }
+                }
+            }
+
+
+        }
+
+        var head = new Node(1);
+        var newTree = new TreeMgmt(head);
+        newTree.add(2);
+
+    </script>
+</body>
+
+</html>

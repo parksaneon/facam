@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 재귀함수 : 자기 자신을 호출하는 함수
+        function factorial(num) {
+            if (num > 1) { // num이 일정 값 이상이면
+                return num * factorial(num - 1); // 입력보다 작은 값을 호출
+            } else {
+                return num; // 재귀 함수 종료
+            }
+        }
+
+        //console.log(factorial(5));
+
+        // 재귀함수는 내부적으로 stack의 형태로 관리된다.
+        // stack은 함수가 차곡차곡 쌓여있는 형태로 맨 마지막에 쌓인 함수부터 우선적으로 호출된다.
+        // factorial(4) 를 호출하면
+        // factorial(4) -> factorial(3) -> factorial(2) -> factorial(1)처럼 쌓이고
+        // factorial(1)부터 순서대로 값을 반환하고 반환이 끝난 함수는 stack에서 사라진다.
+        // 자료구조의 stack과 같은 형태이다.
+
+        function multiple(num) {
+            // var return_value = 1;
+            // for (var i = 1; i < num; i++) {
+            //     return_value = return_value * i;
+            // }
+            // return return_value
+
+            if (num <= 1) {
+                return num
+            } else {
+                return num * multiple(num - 1)
+            }
+        }
+
+        //console.log(sumList([1, 5, 16, 5]));
+        // 리스트의 합을 구하는 함수
+        function sumList(data) {
+            if (data.length <= 1) {
+                return data[0]
+            } else {
+                var num = data[0]; // 0번째 요소를 복사
+                data.splice(0, 1); // 리스트에서 0번째 요소를 제거한다.
+                return num + sumList(data);
+            }
+        }
+
+        function readStr(string) {
+            if (string.length <= 1) {
+                return true
+            } else {
+                if (string[0] === string[string.length]) {
+                    //return readStr(string[])
+                } else {
+                    return false
+                }
+            }
+        }
+        console.log(operNum(3));
+
+        function operNum(num) {
+            console.log(num);
+            if (num === 1) {
+                return num
+            } else if (num % 2 === 1) {
+                console.log('홀수');
+                return operNum((3 * num) + 1)
+            } else if (num % 2 === 0) {
+                console.log('짝수');
+                return operNum(num / 2)
+            }
+        }
+
+        function plusNum(num) {
+            if (num === 1) {
+                return 1
+            } else if (num === 2) {
+                return 2
+            } else if (num === 3) {
+                return 4
+            }
+            return plusNum(num - 1) + plusNum(num - 2) + plusNum(num - 3)
+        }
+    </script>
+</body>
+
+</html>

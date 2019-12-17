@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 퀵정렬 : 퀵이란 말을 사용할 만큼 굉장히 빠른 정렬 알고리즘
+        // 기준점(pivot)을 정해서 다른 데이터를 비교해 기준점보타 작은 데이터는 왼쪽 큰데이터는 오른쪽에 정렬한다.
+        // 각 왼쪽 , 오른쪽은 재귀용법으로 다시 동일 함수를 호출해 위 작업을 반복한다.
+        // 함수는 왼쪽 + 기준점 + 오른쪽을 리턴한다.
+        // 기준점을 중심으로 데이터를 왼쪽, 오른쪽으로 보내고 이것을 재귀함수로 반복적으로 실행하는 것이 특징
+
+        // 기준점은 보통 맨 앞의 데이터로 한다.
+        // [49, 97, 53, 5, 33, 65, 62, 51] -> 기준점 49
+        // [5, 33, 49, 97, 53, 65, 62, 51] -> 기준점인 49를 기준으로 데이터를 나눈다.
+        // [5, 33] -> 왼쪽을 정렬한다. 이때 기준점은 위와 마찬가지로 맨 앞 데이터인 5이다.
+        //  97                      53                      53                  51                  62  
+        // [97, 53, 65, 62, 51] -> [53, 65, 62, 51, 97] -> [53, 65, 62, 51] -> [51, 53, 65, 62] -> [62, 65] -> [51, 53, 62, 65, 97]
+        // [5, 33, 49, 51, 53, 62, 65, 97] 의 최종적인 형태가 된다.
+        console.log(quickSort([49, 97, 53, 5, 33, 65, 62, 51]));
+
+        function quickSort(data) {
+            if (data.length <= 1) {
+                return data
+            } else {
+                var pivot = data[0]; // 기준점은 맨 앞의 데이터
+                var left = [];
+                var right = [];
+                for (var i = 1; i < data.length; i++) {
+                    if (pivot > data[i]) {
+                        left.push(data[i]);
+                    } else {
+                        right.push(data[i]);
+                    }
+                }
+                return quickSort(left).concat([pivot], quickSort(right));
+            }
+        }
+    </script>
+</body>
+
+</html>

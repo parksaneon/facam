@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function Node(data) {
+            this.data = data;
+            this.next = null;
+        }
+
+        function LinkedList() {
+            this.head = null;
+            this.length = 0;
+        }
+
+        LinkedList.prototype.add = function (data) {
+            var node = new Node(data);
+            var curr;
+
+            if (this.head === null) {
+                this.head = node;
+            } else {
+                curr = this.head;
+                while (curr.next) {
+                    curr = curr.next;
+                }
+                curr.next = node;
+                this.length++;
+            }
+        }
+
+        LinkedList.prototype.remove = function (data) {
+            var curr = this.head;
+            var temp;
+            if (!curr) { // 맨 첫번째 데이터가 없을때
+                return false;
+            } else if (curr.data = data) {  // 맨 첫번째 데이터가 삭제할 데이터 일때
+                temp = curr;
+                this.head = this.head.next;
+                delete temp
+            } else {
+                while (curr.next) {
+                    if (curr.next.data === data) {
+                        temp = curr.next; // 삭제할 데이터를 임시로 저장하고
+                        curr.next = curr.next.next; // 삭제할 데이터의 위치에 삭제할 데이터 다음의 데이터를 저장한 다음
+                        delete temp; // 임시로 저장했던 데이터를 삭제하고
+                        break; // white문 해제
+                    } else {
+                        curr = curr.next;
+                    }
+                }
+            }
+        }
+
+        LinkedList.prototype.find = function (data) {
+            var curr = this.head;
+            if (!curr) {
+                return false;
+            } else {
+                while (curr.next) {
+                    if (curr.next.data = data) {
+                        return true;
+                    } else {
+                        curr = curr.next;
+                    }
+                }
+                return false;
+            }
+        }
+
+        function Dnode(data) {
+            this.data = data;
+            this.prev = null;
+            this.next = null;
+        };
+
+        function DlinkedList() {
+            this.head = null;
+            this.tail = null;
+        }
+
+        DlinkedList.prototype.add = function (data) {
+            var node = new Dnode(data);
+            var curr = node.head;
+            var newNode;
+
+            if (!curr) {
+                this.head = node;
+                this.tail = node;
+            } else {
+                while (curr.next) {
+                    curr = curr.next;
+                }
+                node.prev = curr;
+                curr.next = node;
+                this.tail = node;
+            }
+        }
+
+        DlinkedList.prototype.remove = function (data) {
+            var node = new Dnode(data);
+            var curr = node.head;
+            var temp;
+
+            if (!curr) {
+                return false;
+            } else {
+                while (curr.next) {
+                    if (curr.next.data === data) {
+                        temp = curr.next;
+                        curr.next = curr.next.next;
+                        delete temp
+                    } else {
+                        curr = curr.next;
+                    }
+                }
+            }
+        }
+
+        var list = new LinkedList();
+        list.add(15);
+        list.add(10);
+        list.add(5);
+        list.add(1);
+        console.log(list);
+    </script>
+</body>
+
+</html>
