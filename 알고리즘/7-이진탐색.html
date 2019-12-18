@@ -10,42 +10,41 @@
 
 <body>
     <script>
-        // 버블정렬 : 앞에 있는 숫자부터 뒤에 있는 숫자들과 2개씩 비교를 해나가며 앞에 있는 숫자가 뒤의 숫자 보다 크면 숫자의 위치를 서로 바꿔준다. (작은 숫자가 앞에 오도록)
-        // 만약 데이터의 길이가 4개라면  0 - > 1  1 -> 2  2 -> 3  처럼 맨앞의 인덱스 번호부터 그 다음 번호까지 차례대로 비교한다.
-        // 앞 인덱스 값과 뒤 인덱스 값을 비교해 큰 값을 뒤로 보내는 것이 특징이다.
+        // 분할 정복 알고리즘
+        // divide : 문제를 하나 또는 둘 이상으로 나눈다.
+        // conquer : 나눠진 문제가 충분히 작고, 해결이 가능하다면 해결하고, 그렇지 않다면 다시 나눈다.
 
-        // 왼쪽에서 오른쪽으로 흘러가는 비누방울(버블) 이라고 생각하기
+        // 이진 탐색
+        // divide : 리스트를 2개 이상의 서브 리스트로 나눈다.
+        // conquer : 검색할 숫자가 중간값 이상이면 뒷부분의 서브 리스트에서 검색할 춧자을 찾는다.
+        //           검색할 숫자가 중간값 이하라면 앞부분의 서브 리스트에서 검색할 숫자를 찾는다.
 
-        // 데이터 길이가 2일 떄는 조건 체크 1번 , 턴 1번      
-        // 데이터 길이가 3일 때는 조건 체크 2번 , 턴 2번
-        // 데이터 길이가 4일 떄는 조건 체크 3번 , 턴 3번
+        // 이때 해당 리시트는 정렬이 되어있는 상태여야만 한다.
 
-        // 턴이란 한번 맨 앞의 데이터를 맨 끝의 데이터까지의 비교 한 싸이클이라 한다. 
-        // 한 번의 턴이 끝나면 다시 턴을 돈다. 
-        // 이때 첫 턴에서는 가장 큰 데이터가 맨 마지막 자리에 위치하였을 것이기 떄문에 턴의 조건 체크중 1번이 빠진 상태로 턴을 돈다.
-        // 한 번의 턴마다 그 배열의 가장 큰 수는 무조건 해당 턴의 가장 마지막 자리로 가게된다.
+        console.log(binary_search([1, 3, 5, 6, 7, 9, 10], 5));
 
+        function binary_search(data, search) {
+            if (data.length === 1 && search === data[0]) {
+                return true
+            }
+            if (data.length === 1 && search !== data[0]) {
+                return false
+            }
+            if (data.length === 0) {
+                return false
+            }
+            var middle = Math.floor(data.length / 2);
 
-        function sortList(exList) {
-            for (var i = 0; i < exList.length; i++) { // 1 turn
-                var swap = false
-                for (var e = 0; e < exList.length - e - 1; e++) { // 조건 (1번 턴이 끝날때 마다 그 전턴에서 -1만큼 조건이 감소한다.)
-                    if (exList[i] > exList[i + 1]) {  // 만약 앞의 인덱스 값이 뒤의 인덱스 값보다 크다면
-                        var temp = exList[i]; // 앞 인덱스 값을 임시로 복사하고
-                        exList[i] = exList[i + 1]; // 뒤의 값을 앞 인덱스 값으로 할당한 다음
-                        exList[i + 1] = temp; // 뒤 인덱스 값에는 복사했던 앞 인덱스 값을 할당한다.
-                        swap = true;
-                    }
-                }
-                if (swap === false) {
-                    return false
+            if (search === data[middle]) {
+                return true
+            } else {
+                if (search > data[middle]) { // 찾을 값이 중간값보다 크다면
+                    return binary_search(data.slice(middle), search); // 뒷부분의 서브 리스트에서 검색
+                } else { // 찾을 값이 중간 값보다 작다면
+                    return binary_search(data.slice(0, middle), search); // 앞부분의 서브 리스트에서 검색 
                 }
             }
         }
-        // {5, 4, 2, 1} 3 turn 3 조건 // 4개의 배열에서 3번의 턴이 끝나고 나면 가장 큰 수인 5가 뒤로 간다.
-        // {4, 2, 1, 5} 2 turn 2 조건 // 가장 큰 수인 5가 맨뒤에 있으므로 5와 그 앞의 숫자를 비교하는 것은 무의미하다. 때문에 조건도 -1 만큼 감소시킨다.
-        // {2, 1, 4, 5} 1 turn 1 조건
-        // {1, 2, 4, 5} 
     </script>
 </body>
 

@@ -33,9 +33,9 @@
                 var left = [];
                 var right = [];
                 for (var i = 1; i < data.length; i++) {
-                    if (pivot > data[i]) {
+                    if (pivot > data[i]) { // 기준점 보다 작은 데이터는 왼쪽 리스트에 저장
                         left.push(data[i]);
-                    } else {
+                    } else {               // 기준점 보다 큰 데이터는 오른쪽 리스트에 저장
                         right.push(data[i]);
                     }
                 }
